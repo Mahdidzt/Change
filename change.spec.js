@@ -19,14 +19,14 @@ describe('Change', () => {
     expect(result).toEqual([5, 10]);
   });
 
-  xtest('change with lilliputian Coins', () => {
+  test('change with lilliputian Coins', () => {
     // https://en.wikipedia.org/wiki/Change-making_problem#Greedy_method
     const change = new Change();
     const result = change.calculate([1, 4, 15, 20, 50], 23);
     expect(result).toEqual([4, 4, 15]);
   });
 
-  xtest('change with Lower Elbonia Coins', () => {
+  test('change with Lower Elbonia Coins', () => {
     // https://en.wikipedia.org/wiki/Change-making_problem#Greedy_method
     const change = new Change();
     const result = change.calculate([1, 5, 10, 21, 25], 63);
@@ -55,13 +55,13 @@ describe('Change', () => {
     ]);
   });
 
-  xtest('possible change without unit coins available', () => {
+  test('possible change without unit coins available', () => {
     const change = new Change();
     const result = change.calculate([2, 5, 10, 20, 50], 21);
     expect(result).toEqual([2, 2, 2, 5, 10]);
   });
 
-  xtest('another possible change without unit coins available', () => {
+  test('another possible change without unit coins available', () => {
     const change = new Change();
     const result = change.calculate([4, 5], 27);
     expect(result).toEqual([4, 4, 4, 5, 5, 5]);

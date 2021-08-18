@@ -3,8 +3,8 @@
 // convenience to get you started writing code faster.
 //
 
-export class Change {
-  // class Change {
+// export class Change {
+class Change {
   calculate(coinArray, target) {
     if (target === 0) {
       return [];
@@ -14,19 +14,48 @@ export class Change {
       throw `The total ${target} cannot be represented in the given currency.`
     }
     const result = [];
+    const maxSmaller = this.getMaxSmaller(coinArray, target);
+    const index = coinArray.findIndex(el => el === maxSmaller);
+    for (let i = index; i >= 0; i--) {
+      result.push(this.getChangeByTarget(coinArray.slice(0, i + 1), target));
+    }
+    console.log('result: ', result);
+    return result.reduce((prev, next) => prev.length > next.length ? next : prev);
+  }
+
+  getChangeByTarget(list, target) {
+    if (!list.length) {
+      return [];
+    }
+    const result = [];
+    const tempList = [...list];
     let targetRemain = target;
-    const coinArrayTemp = [...coinArray];
-    const maxSmaller = coinArrayTemp.reverse().find(el => target >= el);
+    const maxSmaller = this.getMaxSmaller(tempList, target);
     targetRemain -= maxSmaller;
-    result.unshift(maxSmaller)
-    if (targetRemain !== 0) {
-      result.unshift(...this.calculate(coinArray, targetRemain));
+    const nextStepMaxSmaller = this.getMaxSmaller(tempList, targetRemain);
+    if (targetRemain === 0) {
+      result.unshift(maxSmaller);
+    } else {
+      if (nextStepMaxSmaller) {
+        result.unshift(maxSmaller);
+        result.unshift(...this.getChangeByTarget(tempList, targetRemain));
+      } else {
+        const index = tempList.findIndex(el => el === maxSmaller);
+        result.unshift(...this.getChangeByTarget(tempList.slice(0, index), target));
+      }
     }
     return result;
+  }
+
+  getMaxSmaller(list, target) {
+    const listTemp = [...list];
+    const maxSmaller = listTemp.reverse().find(el => target >= el);
+    return maxSmaller;
   }
 }
 
 
+
 const change = new Change();
-const result = change.calculate([1, 4, 15, 20, 50], 23);
+const result = change.calculate([4, 5], 27);
 console.log('result: ', result);
