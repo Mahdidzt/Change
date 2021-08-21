@@ -82,7 +82,7 @@ describe('Change', () => {
     expect(test).toThrowError(message);
   });
 
-  xtest('error testing if no combination can add up to target', () => {
+  test('error testing if no combination can add up to target', () => {
     const change = new Change();
     const message = 'The total 94 cannot be represented in the given currency.';
     const test = () => {
@@ -91,7 +91,7 @@ describe('Change', () => {
     expect(test).toThrowError(message);
   });
 
-  xtest('cannot find negative change values', () => {
+  test('cannot find negative change values', () => {
     const change = new Change();
     const message = 'Negative totals are not allowed.';
     const test = () => {
